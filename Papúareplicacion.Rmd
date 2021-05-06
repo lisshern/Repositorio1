@@ -1,0 +1,40 @@
+---
+title: "Replicado"
+author: "Lisset Hernandez"
+date: "6/5/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+sessionInfo()
+```
+R version 4.0.5 (2021-03-31)
+Running under: Windows 10 x64 (build 19042)
+```{r}
+library(tidyverse)
+library(datos)
+Pingus<-datos::pinguinos
+```
+
+```{r, echo=FALSE}
+Papúa<-Pingus%>%
+filter(especie=='Papúa')
+```
+```{recho=FALSE}
+class(Papúa)
+```
+```{r, echo=FALSE}
+modelo_lineal <- lm (data=Papúa,
+                       masa_corporal_g ~ largo_aleta_mm)
+```
+```{r, echo=FALSE}
+Tabla<- broom:: tidy(modelo_lineal)
+```
+# Graficar el modelo lineal del objeto Papúa
+```{r, echo=FALSE, fig.height=5, warning=FALSE}
+ggplot(Papúa,
+       aes(x=largo_aleta_mm, 
+       y=masa_corporal_g)) +
+       geom_point(aes(color =especie))+
+       geom_smooth(method="lm")
+```
